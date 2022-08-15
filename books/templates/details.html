@@ -4,34 +4,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
-    <title>Blinders eSports</title>
-    <style>
-     /* #backg { 
-        background-image: url({{teambets.image_URL}}) ;
-        background-position: center center;
-        background-repeat:  no-repeat;
-        background-attachment: fixed;
-        background-size:  cover;
-        background-color: #999;
-        opacity: 100%;
-        } */
-    </style>
+    <title>Blinders eSports - Aplha Testing</title>
 </head>
-<body class="px-2 py-2" id="backg">
+<body class="px-2 py-2 has-background-black-ter">
 <article class="message">
-  <div class="message-header">
+  <div class="message-header has-text-white-ter">
     <p>Disclaimer</p>
   </div>
-  <div class="message-body">
-    This Website is only for demostration purpose and to give a basic idea of our model. This no where near represents the finished platforme. The original content is in development and if any needed, you can contact us at <strong>blinderesports@gmail.com</strong>.
+  <div class="message-body has-text-danger">
+    If you are seeing this then you are one of our so called lucky alpha testers. We know the interface is shit but trust us, we are trying to wipe it. Contact us at <strong>blinderesports@gmail.com</strong> or at Discord for your suggestions and complaints.
   </div>
 </article>
-    <nav class="navbar has-background-grey-lighter has-shadow">
+    <nav class="navbar has-background-danger">
         <div class="navbar-brand is-primary">
             <a href="/home/" class="navbar-item has-text-message">
-                <h1 class="is-size-4 has-text-weight-bold">Blinders eSports</h1>
+                <h1 class="is-size-4 has-text-weight-bold has-text-white-ter">Blinders eSports</h1>
             </a>
-            <a class="navbar-burger" id="burger">
+            <a class="navbar-burger has-text-white-ter" id="burger">
               <span></span>
               <span></span>
               <span></span>
@@ -40,12 +29,12 @@
         <div class="navbar-menu" id="nav-links">
           <div class="navbar-end">
         {% if user.is_authenticated %}
-            <a href="/profile/" class="navbar-item">Profile</a>
+            <a href="/profile/" class="navbar-item has-text-weight-bold">Profile</a>
         {% else %}
-            <a href="/login/" class="navbar-item">Login</a>
+            <a href="/login/" class="navbar-item has-text-weight-bold">Login</a>
         {% endif %}
         {% if user.is_authenticated %}
-            <a class="navbar-item">Your Balance : {{point.points}}</a>
+            <a class="navbar-item has-text-weight-bold">Your Balance : {{point.points}}</a>
         {% endif %}
           </div>
         </div>
@@ -54,34 +43,67 @@
   <div class="container px-2 py-2">
     <form action="" method="POST">
         {% csrf_token %}
-        <h1 class="is-size-1 has-text-centered has-text-weight-bold has-background-white">
-            {{teambets.match}}
+        <h1 class="is-size-1 has-text-centered has-text-weight-bold has-text-white-ter">
+            {{teambets.match | linebreaks }}
         </h1>
-        <br>
-        <h1 class="is-size-4 is-italic has-text-centered has-background-white">
-          Who is going to win this one??
+        <h1 class="is-size-3 has-text-centered has-text-white-ter has-text-weight-bold">
+          {{teambets.teamOne}} VS {{teambets.teamTwo}}
+        </h1>
+        <h1 class="is-size-5is-italic has-text-centered has-text-white-ter">
+          {{teambets.description | linebreaks }}
         </h1><br>
-        <h3 class="subtitle-is-6 has-text-centered">
-          You will be placing 100 points <br> on bet in this round.
+        <h3 class="subtitle-is-6 has-text-centered has-text-white-ter">
+          Match Timing : <span class="subtitle-is-6" id="event-box">{{teambets.datetime | date:"M d, Y H:i:s"}}</span>
         </h3>
+        {% if teambets.video_URL != "" %}
+        <h6 class="subtitle-is-6 has-text-right">
+          <a class="subtitle-is-6 tag is-dark" href="{{teambets.video_URL}}">
+          Check Out The Game!!
+         </a>
+        </h6>
+        {% endif %}
         <br>
-      <div class="container has-text-centered has-background-white">
+      <div class="container has-text-centered has-text-white-ter">
         <div class="control">
-            <label class="radio">
+
+          <span class="label has-text-white-ter is-size-5">{{option.bet_one | linebreaks }}</span>
+            <label class="radio is-size-5 mx-5">
               <input type="radio" name="team" value="One" required>
-              {{teambets.teamOne}}
+              {{option.bet_one_option_one}} <br>
+              <span class="subtitle is-6 has-text-white-ter ">Odds : {{option.bet_one_option_one_odds}}X</span>
             </label>
-            <label class="radio">
+            <label class="radio is-size-5 mx-5">
               <input type="radio" name="team" value="Two" required>
-              {{teambets.teamTwo}}
+              {{option.bet_one_option_two}} <br>
+              <span class="subtitle is-6 has-text-white-ter ">Odds : {{option.bet_one_option_two_odds}}X</span>
             </label>
+            <br> <br>
+            <label class="label has-text-white-ter">How many points are you willing to bet?</label>
+            <div class="control">
+              <select name="pointoptions" id="list1">
+                <option value="50">50</option>
+                {% if point.points >= 75 %}
+                <option value="75">75</option>
+                {% endif %}
+                {% if point.points >= 100 %}
+                <option value="100">100</option>
+                {% endif %}
+                {% if point.points >= 200 %}
+                <option value="200">200</option>
+                {% endif %}
+                {% if point.points >= 500 %}
+                <option value="500">500</option>
+                {% endif %}
+              </select>
+            </div>
         </div>
       </div>
       <br>
-        {% if point.points >= 100 %}
+  {% if betentry.betted == False %}
+        {% if point.points >= 50 %}
         <div class="container has-text-centered">
         <div class="control">
-            <button class="button is-primary">Submit</button>
+            <button class="button is-primary" id="button">Submit</button>
         </div>
         </div>
         {% else %}
@@ -91,16 +113,62 @@
         </div>
         </div>
         {% endif %}
+    {% elif betentry.betted == True %}
+        <div class="container has-text-centered">
+        <div class="control">
+            <span class="button is-primary" id="button" disabled>You have already placed a bet</span>
+        </div>
+        </div>
+  {% endif %}
     </form>
+  <section class="hero">
+        <div class="control" id="hero-body">
+            <div class="container">
+                <span class="has-text-info">
+                {{teambets.betLog |linebreaks }}
+                </span>
+            </div>
+        </div>
+  </section>
   </div>
   </div>
+  <style>
+    #hero-body{
+      height: 75px;
+      overflow: auto;
+    }
+  </style>
     <script>
       const burgerIcon = document.querySelector('#burger');
       const navbarMenu = document.querySelector('#nav-links');
-      
+
       burgerIcon.addEventListener('click', () => {
         navbarMenu.classList.toggle('is-active');
       });
-    </script> 
+    </script>
+    <script>
+     const eventBox = document.getElementById('event-box');
+      const eventDate = Date.parse(eventBox.textContent);
+      console.log(eventDate);
+
+      setInterval(()=>{
+        const now = new Date().getTime();
+        console.log(now);
+        const diff = Date.parse(eventDate - now);
+
+        const d = Math.floor(eventDate / (1000 * 60 * 60 * 24) - (now / (1000 * 60 * 60 * 24) ));
+        const h = Math.floor((eventDate / (1000 * 60 * 60) - (now / (1000 * 60 * 60) )) % 24 );
+        const m = Math.floor((eventDate / (1000 * 60) - (now / (1000 * 60) )) % 60 );
+        const s = Math.floor((eventDate / (1000) - (now / (1000) )) % 60 );
+
+
+      if(eventDate >= now) {
+        document.querySelector('#button').disabled = false;
+        } else {
+        document.querySelector('#button').disabled = true;
+        document.querySelector('#button').innerHTML = "Match Has Already Begun";
+        }
+      }, 1000);
+    </script>
 </body>
 </html>

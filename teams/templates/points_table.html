@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blinders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/15181efa86.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/hello-parallax.css">
+  </head>
+
+<body class="px-2 py-2 has-background-dark">
+<article class="message">
+  <div class="message-header">
+    <p>Disclaimer</p>
+  </div>
+  <div class="message-body">
+    We are still working on our interface and full functionality. This no where near represents the finished platforme. Feel free to contact us at  <strong>blinderesports@gmail.com</strong> for your suggestions and complaints.
+  </div>
+</article>
+<section class="hero is-small">
+    <div class="hero-body">
+        <h1 class="title is-1 has-text-info">LeaderBoard</h1>
+        <hr class="content-divider">
+<table class="table is-fullwidth has-background-dark has-text-white">
+  <thead>
+    <tr>
+      <th class="has-text-info">Team</th>
+      <th class="has-text-info">Pld</th>
+      <th class="has-text-info">W</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for team in teams %}
+    <tr>
+      <td class="has-text-white"><a href="{% url 'team_detail' team.index1 %}" title="{{team.name}}" class="has-text-white">{{team.name}}</a>
+      </td>
+      <td class="has-text-white">{{team.matches_played}}</td>
+      <td class="has-text-white">{{team.wins}}</td>
+    </tr>
+   {% endfor %}
+  </tbody>
+</table>
+    </div>
+ </section>
+ <hr class="content-divider">
+<footer class="footer has-background-dark">
+    <div class="content has-text-right has-text-info">
+      <p>
+        CODM Tournament on Blinders. <hr class="content-divider">
+        <a href="/teams/" class="has-text-white"> All Teams </a><br><br>
+        <a href="https://discord.gg/5w6BAWXK4u" class="has-text-white"> Discord </a><br><br>
+        <a href="https://instagram.com/rsorganization?igshid=1uvfozsz86c5p" class="has-text-white"> Instagram </a>
+      </p>
+    </div>
+</footer>
+</body>
+<style>
+    body{
+      background-image: url("https://i.pinimg.com/564x/75/7e/2e/757e2eda92eaf640de87328bbd8be258.jpg");
+      background-size:cover;
+    }
+  </style>
+</html>

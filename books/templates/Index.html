@@ -4,23 +4,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
-    <title>Blinders eSports</title>
+    <title>Blinders eSports - Aplha Testing</title>
 </head>
-<body class="px-2 py-2">
+<body class="px-2 py-2 has-background-black-ter">
 <article class="message">
-  <div class="message-header">
+  <div class="message-header has-text-white-ter">
     <p>Disclaimer</p>
   </div>
-  <div class="message-body">
-    This Website is only for demostration purpose and to give a basic idea of our model. This no where near represents the finished platforme. The original content is in development and if any needed, you can contact us at <strong>blinderesports@gmail.com</strong>.
+  <div class="message-body has-text-danger">
+    If you are seeing this then you are one of our so called lucky alpha testers. We know the interface is shit but trust us, we are trying to wipe it. Contact us at <strong>blinderesports@gmail.com</strong> or at Discord for your suggestions and complaints.
   </div>
 </article>
-    <nav class="navbar has-background-grey-lighter has-shadow">
+    <nav class="navbar has-background-danger">
         <div class="navbar-brand is-primary">
             <a href="/home/" class="navbar-item has-text-message">
-                <h1 class="is-size-4 has-text-weight-bold">Blinders eSports</h1>
+                <h1 class="is-size-4 has-text-weight-bold has-text-white-ter">Blinders eSports</h1>
             </a>
-            <a class="navbar-burger" id="burger">
+            <a class="navbar-burger has-text-white-ter" id="burger">
               <span></span>
               <span></span>
               <span></span>
@@ -29,33 +29,36 @@
         <div class="navbar-menu" id="nav-links">
           <div class="navbar-end">
         {% if user.is_authenticated %}
-            <a href="/profile/" class="navbar-item">Profile</a>
+            <a href="/profile/" class="navbar-item has-text-weight-bold">Profile</a>
         {% else %}
-            <a href="/login/" class="navbar-item">Login</a>
+            <a href="/login/" class="navbar-item has-text-weight-bold">Login</a>
         {% endif %}
-            <a href="previous-matches/" class="navbar-item">Previous Matches</a>
+            <a href="previous-matches/" class="navbar-item has-text-weight-bold">Previous Matches</a>
+            <a href="teams/" class="navbar-item has-text-weight-bold">Teams</a>
           </div>
         </div>
     </nav>
   <div class="section px-2 py-2">
   {% for teambet in teambets %}
-<div class="card my-2 has-shadow-6">
+<div class="card my-2 has-shadow-6 has-background-danger">
+<a href="{% url 'detail' teambet.slug %}">
   <div class="card-image">
     <figure class="image is-4by3">
       <img src="{{teambet.image_URL}}" alt="Match Image">
     </figure>
   </div>
+</a>
   <div class="card-content">
     <div class="media">
       <div class="media-content py-1">
-        <a href="{% url 'detail' teambet.match %}" class="title is-5 has-text-weight-bold">{{teambet.match}}</a>
+        <a href="{% url 'detail' teambet.slug %}" class="title is-5 has-text-weight-bold has-text-white-ter">{{teambet.match}}</a>
       </div>
     </div>
 
-    <div class="content">
-      {{teambet.description}}
+    <div class="content has-text-white-ter">
+      {{teambet.snippet}}
       <br>
-      {{teambet.datetime}}
+      {{teambet.datetime | date:"M d, Y H:i:s"}}
   </div>
 </div>
 </div>
@@ -64,10 +67,10 @@
     <script>
       const burgerIcon = document.querySelector('#burger');
       const navbarMenu = document.querySelector('#nav-links');
-      
+
       burgerIcon.addEventListener('click', () => {
         navbarMenu.classList.toggle('is-active');
       });
-    </script>  
+    </script>
 </body>
 </html>

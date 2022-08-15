@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <title>Blinders eSports - Aplha Testing</title>
+</head>
+<body class="px-2 py-2 has-background-black-ter">
+<article class="message">
+  <div class="message-header has-text-white-ter">
+    <p>Disclaimer</p>
+  </div>
+  <div class="message-body has-text-danger">
+    If you are seeing this then you are one of our so called lucky alpha testers. We know the interface is shit but trust us, we are trying to wipe it. Contact us at <strong>blinderesports@gmail.com</strong> or at Discord for your suggestions and complaints.
+  </div>
+</article>
+<form action="" method="POST">
+        {% csrf_token %}
+        <h1 class="is-size-1 has-text-centered has-text-weight-bold has-text-white-ter">
+          Match : {{betentry.concerned }}
+        </h1>
+        <br>
+        <h1 class="is-size-4 is-italic has-text-centered has-text-white-ter">
+          User : {{betentry.user_entered}} <br> <br>
+          Entry : {{betentry.entry}}
+        </h1><br><br>
+        <h3 class="subtitle-is-6 has-text-centered has-text-white-ter">
+          Amount : {{betentry.amount}} <br><br>
+          Odds : {{betentry.bet_odds}}
+        </h3><br>
+        <br>
+      <div class="container has-text-centered has-background-white">
+        <div class="control">
+            <label class="radio">
+              <input type="radio" name="option" value="One" required>
+              Won
+            </label>
+            <label class="radio">
+              <input type="radio" name="option" value="Two" required>
+              Lost
+            </label>
+            <label class="label">Did the user win or lose ??</label>
+        </div>
+      </div>
+      <br>
+        <div class="container has-text-centered">
+        <div class="control">
+            <button class="button is-primary" id="button">Submit</button>
+        </div>
+        </div>
+    </form>
+</body>
+</html>
